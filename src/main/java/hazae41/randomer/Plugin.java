@@ -11,8 +11,6 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.spigotmc.event.player.PlayerSpawnLocationEvent;
 
-import java.util.Random;
-
 public class Plugin extends JavaPlugin implements Listener {
   int minDistance;
   int maxDistance;
@@ -48,25 +46,17 @@ public class Plugin extends JavaPlugin implements Listener {
     }
   }
 
-  static int getRandomInt(int min, int max) {
-    return min + new Random().nextInt(max - min + 1);
-  }
-
-  static boolean getRandomBoolean() {
-    return new Random().nextBoolean();
-  }
-
   Location getRandomLocation(World world) {
     int tries = 0;
 
     while (true) {
       tries++;
 
-      int cx = getRandomInt(minDistance, maxDistance);
-      int cxs = getRandomBoolean() ? 1 : -1;
+      int cx = Random.getInt(minDistance, maxDistance);
+      int cxs = Random.getBoolean() ? 1 : -1;
 
-      int cz = getRandomInt(minDistance, maxDistance);
-      int czs = getRandomBoolean() ? 1 : -1;
+      int cz = Random.getInt(minDistance, maxDistance);
+      int czs = Random.getBoolean() ? 1 : -1;
 
       Chunk chunk = world.getChunkAt(cxs * cx, czs * cz);
       Block block = chunk.getBlock(7, 80, 7);
@@ -87,7 +77,7 @@ public class Plugin extends JavaPlugin implements Listener {
   }
 
   @EventHandler
-  void onSpawn(PlayerSpawnLocationEvent e) {
+  public void onSpawn(PlayerSpawnLocationEvent e) {
     if (e.getPlayer().hasPlayedBefore()) return;
     World world = e.getSpawnLocation().getWorld();
     if (world == null) throw new NullPointerException();
@@ -95,10 +85,11 @@ public class Plugin extends JavaPlugin implements Listener {
   }
 
   @EventHandler
-  void onRespawn(PlayerRespawnEvent e) {
+  public void onRespawn(PlayerRespawnEvent e) {
     if (e.isAnchorSpawn() || e.isBedSpawn()) return;
     World world = e.getRespawnLocation().getWorld();
     if (world == null) throw new NullPointerException();
-    e.setRespawnLocation(getRandomLocation(world));
+    Location location = getRandomLocation(world);
+    e.setRespawnLocation(location);
   }
 }
