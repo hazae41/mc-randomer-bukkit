@@ -1,0 +1,3 @@
+min-chunk-distance: 1024
+max-chunk-distance: 2048
+max-inhabited-seconds: 3600

@@ -1,0 +1,6 @@
+name: Randomer
+version: 1.2
+description: Randomer
+api-version: 1.16
+main: hazae41.randomer.Plugin
+author: hazae41
