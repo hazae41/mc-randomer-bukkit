@@ -89,7 +89,6 @@ public class Plugin extends JavaPlugin implements Listener {
     if (e.isAnchorSpawn() || e.isBedSpawn()) return;
     World world = e.getRespawnLocation().getWorld();
     if (world == null) throw new NullPointerException();
-    Location location = getRandomLocation(world);
-    e.setRespawnLocation(location);
+    e.setRespawnLocation(getRandomLocation(world));
   }
 }
